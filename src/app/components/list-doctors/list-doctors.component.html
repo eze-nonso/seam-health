@@ -1,0 +1,51 @@
+<div class="list-container" fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-form-field appearance="outline" class="search" fxFlex="100%" fxFlex.gt-sm="80%">
+    <input (keyup)="searchDoctor($event)" id="search" matInput
+           placeholder="Search doctors">
+    <mat-icon matPrefix>search</mat-icon>
+  </mat-form-field>
+
+  <h2 fxFlex="100%">Doctor List</h2>
+  <table [dataSource]="doctors | paginate: paginateInfo" aria-describedby="Doctors list table" fxFlex="100%" mat-table>
+    <ng-container *ngFor="let column of columns" [matColumnDef]="column.key">
+      <th *matHeaderCellDef mat-header-cell>
+        {{column.header}}
+      </th>
+      <td *matCellDef="let element" mat-cell>
+        {{element[column.key]}}
+      </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    <tr *matNoDataRow>
+      <td [attr.colspan]="displayedColumns.length">
+        <h2>No Doctors found</h2>
+      </td>
+    </tr>
+  </table>
+
+  <div *ngIf="doctors?.length" class="pagination-container">
+
+    <pagination-template #p="paginationApi" (pageBoundsCorrection)="paginateInfo.currentPage = $event"
+                         (pageChange)="paginateInfo.currentPage = $event; changePage($event)"
+                         fxFlex="100%">
+
+      <div class="custom-pagination" fxLayout fxLayoutAlign="space-between center">
+              <span
+                class="info">{{getInfo()}}</span>
+        <div fxLayout fxLayoutGap="8px">
+          <button [disabled]="p.isFirstPage()" class="pagination-previous" mat-stroked-button>
+            Previous
+            <a (click)="p.previous()" *ngIf="!p.isFirstPage()" class="navigator"></a>
+          </button>
+
+          <button [disabled]="p.isLastPage()" class="pagination-next" mat-stroked-button>
+            Next
+            <a (click)="p.next()" *ngIf="!p.isLastPage()" class="navigator"></a>
+          </button>
+        </div>
+      </div>
+    </pagination-template>
+  </div>
+</div>

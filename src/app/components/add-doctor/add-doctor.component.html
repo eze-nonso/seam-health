@@ -1,0 +1,22 @@
+<h1 class="header">Register New Doctor</h1>
+<form #docForm="ngForm" (ngSubmit)="uploadNewDoctor()" [formGroup]="doctorForm" class="forms" fxLayout="row wrap"
+      fxLayout.lt-sm="column" fxLayoutAlign="space-between"
+      fxLayoutGap="50px 0 grid" fxLayoutGap.lt-md="20px 0 grid">
+  <ng-container *ngFor="let form of formData">
+    <mat-form-field appearance="outline" color="primary" fxFlex="33%">
+      <mat-label>{{form.controlName | titlecase}}</mat-label>
+      <input *ngIf="form.pattern; else defaultInput" [formControlName]="form.controlName" [pattern]="form.pattern"
+             [type]="form.inputType"
+             matInput required>
+      <ng-template #defaultInput>
+        <input [formControlName]="form.controlName" [type]='form.inputType' matInput required>
+      </ng-template>
+      <mat-error
+        *ngIf="getControl(form.controlName)?.invalid">{{getErrorMessage(form.controlName | titlecase)}}
+      </mat-error>
+    </mat-form-field>
+  </ng-container>
+  <div class="submit" fxFlexFill fxLayout fxLayoutAlign="end">
+    <button [disabled]="doctorForm.invalid" color="dark-grey" mat-flat-button type="submit">Register</button>
+  </div>
+</form>

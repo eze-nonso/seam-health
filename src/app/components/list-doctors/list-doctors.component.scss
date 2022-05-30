@@ -1,0 +1,57 @@
+@mixin common-text-style($font-weight: 500, $font-size: 16px, $line-height: 24px) {
+  font-weight: $font-weight !important;
+  line-height: $line-height !important;
+  font-size: $font-size !important;
+}
+
+.list-container {
+  width: 100%;
+  margin-top: 20px;
+
+  h2 {
+    font-weight: bold;
+  }
+
+  .pagination-container {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 24px 0;
+
+    .custom-pagination {
+      width: 100%;
+
+      .navigator {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        left: 0;
+        height: 100%;
+      }
+
+      .info {
+        @include common-text-style(600, 12px, 19px);
+        color: #646973;
+      }
+
+      .pagination-previous, .pagination-next {
+        @include common-text-style(500, 14px, 17px);
+        padding: 10px 15px;
+        border-radius: 3px;
+        color: grey;
+      }
+    }
+  }
+
+  table {
+    margin-bottom: 20px;
+
+    .mat-no-data-row {
+      td {
+        text-align: center;
+        padding-top: 20px;
+      }
+    }
+  }
+}
+
